@@ -36,7 +36,7 @@ class ConvRequest(BaseModel):
     user_message: str           # user message
     history: list = None        # history of the conversation
     type: int = None            # type of the conversation (for the prompt)
-    data_id: int = None         # id of the document
+    data_id: int = 1         # id of the document
     api_key: str = None         # api key
 
 
