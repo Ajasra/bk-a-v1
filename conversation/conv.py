@@ -71,13 +71,14 @@ def get_simple_response(prompt, history, type):
 def get_response_over_doc(prompt, history, type, data_id):
 
     embeddings = get_embedding_model()
-    data_dir = os.path.join(persist_directory, data_id)
+    data_dir = os.path.join(persist_directory, str(data_id))
     docsearch = Chroma(persist_directory=data_dir, embedding_function=embeddings)
 
-    _DEFAULT_TEMPLATE = """Given the context information answer the following question
-                            If you don't know the answer, just say you dont know Don't try to make up an answer.
-                            =========
-                            question: {}""".format(prompt)
+    _DEFAULT_TEMPLATE = """Given the context information answer the following question.
+    Answer in a language of the question.
+    If you don't know the answer, just say you dont know Don't try to make up an answer.
+    =========
+    question: {}""".format(prompt)
 
     retriever = docsearch.as_retriever(enable_limit=True, limit=5, search_kwargs={"k": 3})
 

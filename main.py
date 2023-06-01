@@ -36,13 +36,14 @@ class ConvRequest(BaseModel):
     user_message: str           # user message
     history: list = None        # history of the conversation
     type: int = None            # type of the conversation (for the prompt)
-    data_id: int = 1         # id of the document
+    data_id: int = 1            # id of the document
     api_key: str = None         # api key
 
 
 def check_api_key(api_key):
     LOCAL_API_KEY = os.getenv("LOCAL_API_KEY")
-    md5_hash = hashlib.md5((LOCAL_API_KEY + datetime.now().strftime("%Y-%m-%d")).encode()).hexdigest()
+    # md5_hash = hashlib.md5((LOCAL_API_KEY + datetime.now().strftime("%Y-%m-%d")).encode()).hexdigest()
+    md5_hash = hashlib.md5((LOCAL_API_KEY).encode()).hexdigest()
 
     if api_key == md5_hash:
         return True
@@ -91,13 +92,13 @@ async def get_response_doc(body: ConvRequest):
     }
 
 
-@app.post("/docs/uploadfile/")
-async def create_upload_file():
-
-    res = create_vector_index()
-    print('Uploading')
-
-    return {
-        "result": res,
-        "code": 400,
-    }
+# @app.post("/docs/uploadfile/")
+# async def create_upload_file():
+#
+#     res = create_vector_index()
+#     print('Uploading')
+#
+#     return {
+#         "result": res,
+#         "code": 400,
+#     }
